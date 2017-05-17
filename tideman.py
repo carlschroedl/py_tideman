@@ -62,17 +62,17 @@ def get_candidates(rankings):
             candidates.add(candidate)
     return candidates
 
-def get_rank_map(ranking):
+def get_index_map(ranking):
     '''
-    Build a dictionary mapping candidates to their order within a ranking
+    Build a dictionary mapping candidates to their index within a ranking
     '''
-    candidate_to_rank = {}
+    candidate_to_index = {}
     for rank, candidate_group in enumerate(ranking.order):
         for candidate in candidate_group:
             #This loop usually only executes once, except in the case of ties
-            candidate_to_rank[candidate] = rank
+            candidate_to_index[candidate] = rank
     
-    return candidate_to_rank
+    return candidate_to_index
     
 def build_margins(rankings):
     '''
@@ -88,11 +88,11 @@ def build_margins(rankings):
     candidate_pairs = combinations(candidates, 2)
     for (x, y) in candidate_pairs:
         for ranking in rankings:
-            rank_of = get_rank_map(ranking)
-            if rank_of[x] > rank_of[y]:
+            index_of = get_index_map(ranking)
+            if index_of[x] < index_of[y]:
                 margins[(x, y)] += ranking.count
                 margins[(y, x)] -= ranking.count
-            elif rank_of[x] < rank_of[y]:
+            elif index_of[x] > index_of[y]:
                 margins[(x, y)] -= ranking.count
                 margins[(y, x)] += ranking.count
             # else they are equal; Do nothing.
