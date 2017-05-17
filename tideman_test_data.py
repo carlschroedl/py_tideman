@@ -1,6 +1,6 @@
 from tideman import Ranking
 from tideman import build_margins
-
+from itertools import groupby
 # Test data from T.M. Zavist, T.N. Tideman 1988. Social Choice and Welfare. Page 170.
 test_data = [
         (1,[["d"],["e"],["b"],["b'"],["f"],["a"],["c"]]),
@@ -19,6 +19,10 @@ def datum_to_ranking(test_datum):
 
 
 rankings = map(datum_to_ranking, test_data)
+margins = build_margins(rankings)
+#margins = sorted(margins)
+print(margins)
 
-print(build_margins(rankings))
+#for key, margin_group in (groupby(sorted(margins),lambda x: x[0])):
+#    print list(margin_group)
     
