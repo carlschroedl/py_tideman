@@ -24,6 +24,7 @@ class Ranking:
             
             example: [['A'], ['B'], ['C'], ['D','E']]
             is the way to represent the order A > B > C > D = E
+        count - optional number of voters who submitted the same ranking. (Defaults to 1)
         '''
         self.order = order 
         self.count = count
