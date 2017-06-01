@@ -1,5 +1,5 @@
 	Memphis	Nashville	Chattanooga	Knoxville
-Memphis	0	58	58	58
-Nashville	-58	0	32	32
-Chattanooga	-58	-32	0	17
-Knoxville	-58	-32	-17	0
+Memphis	0	16	16	16
+Nashville	-16	0	-36	-36
+Chattanooga	-16	36	0	-66
+Knoxville	-16	36	66	0
