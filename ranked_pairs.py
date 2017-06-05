@@ -2,6 +2,7 @@
 import json, sys, itertools
 from collections import defaultdict as ddict
 import networkx
+import random
 
 class Majority:
     def __init__(self, winner, loser, margin):
@@ -12,6 +13,61 @@ class Majority:
 
     def __str__(self):
         return '%s beats %s by %d votes' % (self.winner, self.loser, self.margin)
+
+def get_tie_breaking_ballot(ballots):
+    """
+    ballots - a sequence of ballots
+    returns a randomly-selected ballot for tie-breaking. The ballot may contain ties.
+    """
+    return random.choice(ballots)
+
+def get_tie_breaking_ranking_of_candidates(tie_breaking_ballot):
+    """
+    tie_breaking_ballot - a ballot that may contain ties
+    returns a ballot whose ties have been resolved randomly. This corresponds to Tideman's TBRC.
+    """
+    tbrc = []
+    for group in ballot:
+        if len(group) == 1:
+            #There are no ties for this position. Add the only candidate.
+            candidate = group[0]
+            tbrc.append(candidate)
+        else:
+            #There are ties for this position. Resolve them randomly.
+            tied_candidates_in_random_order = random.sample(group, len(group))
+            for candidate in tied_candidates_in_random_order:
+                tbrc.append(candidate)
+            
+       
+       
+    return tbrc
+
+def get_tie_breaking_ranking_of_pairs(pair_a, pair_b, tie_breaking_ranking_of_candidates):
+    """
+    pair_a - a Majority
+    pair_b - a Majority
+    tie_breaking_ranking_of_candidates - a flat list of candidates. This list cannot contain any ties
+    returns a Majority, the Majority who wins the tie according to the tie breaking ranking of candidates
+    """
+    #recall that a higher ranking is a lower index, so we use the 'min' function
+    highest_rank_in_pair_A = min(tie_breaking_ranking_of_candidates.index(pair_a.winner), tie_breaking_ranking_of_candidates.index(pair_a.loser))
+    highest_rank_in_pair_B = min(tie_breaking_ranking_of_candidates.index(pair_b.winner), tie_breaking_ranking_of_candidates.index(pair_b.loser))
+    if higest_rank_in_pair_A < highest_rank_in_pair_B:
+        return pair_a
+    elif highest_rank_in_pair_A > highest_rank_in_pair_B:
+        return pair_b
+    else:
+        #The highest-rankied elements of each pair are the same
+        #Choose the pair whose second-highest ranked element is greater
+        second_highest_rank_in_pair_A = max(tie_breaking_ranking_of_candidates.index(pair_a.winner), tie_breaking_ranking_of_candidates.index(pair_a.winner))
+        second_highest_rank_in_pair_B = max(tie_breaking_ranking_of_candidates.index(pair_b.winner), tie_breaking_ranking_of_candidates.index(pair_b.winner))
+        if second_highest_rank_in_pair_A < second_highest_rank_in_pair_B:
+            return pair_a
+        elif second_highest_rank_in_pair_A > second_highest_rank_in_pair_B:
+            return pair_b
+        else:
+            #if this is true then we are breaking a tie between two identical pairs
+            raise ValueError('This should never happen')
 
 def load(path):
     with open(path) as f:
