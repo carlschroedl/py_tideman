@@ -42,29 +42,29 @@ def get_tie_breaking_ranking_of_candidates(tie_breaking_ballot):
        
     return tbrc
 
-def get_tie_breaking_ranking_of_pairs(pair_a, pair_b, tie_breaking_ranking_of_candidates):
+def get_tie_breaking_ranking_of_pairs(pair_A, pair_B, tie_breaking_ranking_of_candidates):
     """
-    pair_a - a Majority
-    pair_b - a Majority
+    pair_A - a Majority
+    pair_B - a Majority
     tie_breaking_ranking_of_candidates - a flat list of candidates. This list cannot contain any ties
     returns a Majority, the Majority who wins the tie according to the tie breaking ranking of candidates
     """
     #recall that a higher ranking is a lower index, so we use the 'min' function
-    highest_rank_in_pair_A = min(tie_breaking_ranking_of_candidates.index(pair_a.winner), tie_breaking_ranking_of_candidates.index(pair_a.loser))
-    highest_rank_in_pair_B = min(tie_breaking_ranking_of_candidates.index(pair_b.winner), tie_breaking_ranking_of_candidates.index(pair_b.loser))
+    highest_rank_in_pair_A = min(tie_breaking_ranking_of_candidates.index(pair_A.winner), tie_breaking_ranking_of_candidates.index(pair_A.loser))
+    highest_rank_in_pair_B = min(tie_breaking_ranking_of_candidates.index(pair_B.winner), tie_breaking_ranking_of_candidates.index(pair_B.loser))
     if higest_rank_in_pair_A < highest_rank_in_pair_B:
-        return pair_a
+        return pair_A
     elif highest_rank_in_pair_A > highest_rank_in_pair_B:
-        return pair_b
+        return pair_B
     else:
         #The highest-rankied elements of each pair are the same
         #Choose the pair whose second-highest ranked element is greater
-        second_highest_rank_in_pair_A = max(tie_breaking_ranking_of_candidates.index(pair_a.winner), tie_breaking_ranking_of_candidates.index(pair_a.winner))
-        second_highest_rank_in_pair_B = max(tie_breaking_ranking_of_candidates.index(pair_b.winner), tie_breaking_ranking_of_candidates.index(pair_b.winner))
+        second_highest_rank_in_pair_A = max(tie_breaking_ranking_of_candidates.index(pair_A.winner), tie_breaking_ranking_of_candidates.index(pair_A.winner))
+        second_highest_rank_in_pair_B = max(tie_breaking_ranking_of_candidates.index(pair_B.winner), tie_breaking_ranking_of_candidates.index(pair_B.winner))
         if second_highest_rank_in_pair_A < second_highest_rank_in_pair_B:
-            return pair_a
+            return pair_A
         elif second_highest_rank_in_pair_A > second_highest_rank_in_pair_B:
-            return pair_b
+            return pair_B
         else:
             #if this is true then we are breaking a tie between two identical pairs
             raise ValueError('This should never happen')
