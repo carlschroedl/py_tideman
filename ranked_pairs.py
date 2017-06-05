@@ -59,8 +59,8 @@ def get_tie_breaking_ranking_of_pairs(pair_A, pair_B, tie_breaking_ranking_of_ca
     else:
         #The highest-rankied elements of each pair are the same
         #Choose the pair whose second-highest ranked element is greater
-        second_highest_rank_in_pair_A = max(tie_breaking_ranking_of_candidates.index(pair_A.winner), tie_breaking_ranking_of_candidates.index(pair_A.winner))
-        second_highest_rank_in_pair_B = max(tie_breaking_ranking_of_candidates.index(pair_B.winner), tie_breaking_ranking_of_candidates.index(pair_B.winner))
+        second_highest_rank_in_pair_A = max(tie_breaking_ranking_of_candidates.index(pair_A.winner), tie_breaking_ranking_of_candidates.index(pair_A.loser))
+        second_highest_rank_in_pair_B = max(tie_breaking_ranking_of_candidates.index(pair_B.winner), tie_breaking_ranking_of_candidates.index(pair_B.loser))
         if second_highest_rank_in_pair_A < second_highest_rank_in_pair_B:
             return pair_A
         elif second_highest_rank_in_pair_A > second_highest_rank_in_pair_B:
