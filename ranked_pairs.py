@@ -44,27 +44,28 @@ def get_tie_breaking_ranking_of_candidates(tie_breaking_ballot):
 
 def get_tie_breaking_ranking_of_pairs(pair_A, pair_B, tie_breaking_ranking_of_candidates):
     """
+    Breaks a tie between Majorities using the given tie-breaking ranking of candidates.
+    Raises a ValueError if the Majorities are the same.
     pair_A - a Majority
     pair_B - a Majority
     tie_breaking_ranking_of_candidates - a flat list of candidates. This list cannot contain any ties
-    returns a Majority, the Majority who wins the tie according to the tie breaking ranking of candidates
-    """
+    returns a two-member tuple whose first element is the higher-ranked candidate and whose second element is the lower-ranked candidate.    """
     #recall that a higher ranking is a lower index, so we use the 'min' function
     highest_rank_in_pair_A = min(tie_breaking_ranking_of_candidates.index(pair_A.winner), tie_breaking_ranking_of_candidates.index(pair_A.loser))
     highest_rank_in_pair_B = min(tie_breaking_ranking_of_candidates.index(pair_B.winner), tie_breaking_ranking_of_candidates.index(pair_B.loser))
     if higest_rank_in_pair_A < highest_rank_in_pair_B:
-        return pair_A
+        return (pair_A, pair_B)
     elif highest_rank_in_pair_A > highest_rank_in_pair_B:
-        return pair_B
+        return (pair_B, pair_A)
     else:
-        #The highest-rankied elements of each pair are the same
+        #The highest-ranked elements of each pair are the same
         #Choose the pair whose second-highest ranked element is greater
         second_highest_rank_in_pair_A = max(tie_breaking_ranking_of_candidates.index(pair_A.winner), tie_breaking_ranking_of_candidates.index(pair_A.loser))
         second_highest_rank_in_pair_B = max(tie_breaking_ranking_of_candidates.index(pair_B.winner), tie_breaking_ranking_of_candidates.index(pair_B.loser))
         if second_highest_rank_in_pair_A < second_highest_rank_in_pair_B:
-            return pair_A
+            return (pair_A, pair_B)
         elif second_highest_rank_in_pair_A > second_highest_rank_in_pair_B:
-            return pair_B
+            return (pair_B, pair_A)
         else:
             #if this is true then we are breaking a tie between two identical pairs
             raise ValueError('This should never happen')
